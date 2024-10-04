@@ -1,7 +1,7 @@
-<!-- <div class="w-1/4 border-r border-b border-indigo-400"> -->
-  <button>
-    <!-- En el componente hijo agregamos la etiqueta <ng-content/> y todo lo que provenga del padre
-     sera mostrado en el hijo como lo es este ejemplo "C"-->
-    <ng-content/>
-  </button>
-<!-- </div> -->
+
+<button [class.is-command]="isCommand()">
+  <!-- En el componente hijo agregamos la etiqueta <ng-content/> y todo lo que provenga del padre
+    sera mostrado en el hijo como lo es este ejemplo "C"-->
+  <ng-content/>
+</button>
+
