@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, input, output, viewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, input, output, signal, viewChild, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'calculator-button',
@@ -16,9 +16,10 @@ import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, input, out
 })
 export class CalculatorButtonComponent {
 
+  // metodo con senales
+  public isPressed = signal(false);
   //Esta es la nueva forma en la que Angular nos recomienda hacer las nuevas emisiones
   public onClick = output<string>();
-
   public contentValue = viewChild<ElementRef<HTMLButtonElement>>('button')
 
   public isCommand = input(false, {
@@ -43,9 +44,18 @@ export class CalculatorButtonComponent {
 
   handleClick(): void {
     if(!this.contentValue()?.nativeElement.innerText) return;
+    const value = this.contentValue()!.nativeElement.innerText;
+    this.onClick.emit(value.trim())
+  }
+
+  public keyBoardPressedStyle( key: string ): void {
+    if( !this.contentValue() ) return;
 
     const value = this.contentValue()!.nativeElement.innerText;
-
-    this.onClick.emit(value.trim())
+    if(key !== value) return;
+    this.isPressed.set(true);
+    setTimeout(() => {
+      this.isPressed.set(false);
+    }, 100);
   }
  }

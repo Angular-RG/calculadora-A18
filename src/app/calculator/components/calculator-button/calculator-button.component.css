@@ -8,6 +8,10 @@ button {
   @apply bg-indigo-700 bg-opacity-10 hover:bg-opacity-20 text-2xl;
 }
 
+.is-pressed {
+  @apply bg-indigo-800 bg-opacity-10;
+}
+
 /* Lo que hacemos aqui es volver global nuestro estilo lo cual no es recomendable si queremos
 porque si colocamos este estilo en las clases todo va estar igual y la idea es tener separacion de
 componentes asi que lo mejor que se puede hacer mejor es ir a los style.css globales y tambien
