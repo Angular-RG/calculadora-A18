@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, input, output, viewChild, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'calculator-button',
@@ -15,6 +15,11 @@ import { ChangeDetectionStrategy, Component, HostBinding, input, ViewEncapsulati
   // encapsulation: ViewEncapsulation.None
 })
 export class CalculatorButtonComponent {
+
+  //Esta es la nueva forma en la que Angular nos recomienda hacer las nuevas emisiones
+  public onClick = output<string>();
+
+  public contentValue = viewChild<ElementRef<HTMLButtonElement>>('button')
 
   public isCommand = input(false, {
     transform: ( value: boolean | string ) =>
@@ -34,5 +39,13 @@ export class CalculatorButtonComponent {
   //  Este decorador tiene el acceso y todas las propiedades del host en el decorador @Component
   @HostBinding('class.w-2/4') get commandStyle() {
     return this.isDoubleSize();
+  }
+
+  handleClick(): void {
+    if(!this.contentValue()?.nativeElement.innerText) return;
+
+    const value = this.contentValue()!.nativeElement.innerText;
+
+    this.onClick.emit(value.trim())
   }
  }

@@ -1,5 +1,9 @@
 
-<button [class.is-command]="isCommand()">
+<button
+  [class.is-command]="isCommand()"
+  (click)="handleClick()"
+  #button
+  >
   <!-- En el componente hijo agregamos la etiqueta <ng-content/> y todo lo que provenga del padre
     sera mostrado en el hijo como lo es este ejemplo "C"-->
   <ng-content/>
