@@ -9,7 +9,9 @@ import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, input, out
   changeDetection: ChangeDetectionStrategy.OnPush,
   //Con esta propiedad agregamos los estilos a nuestro componente y cuando lo mandemos a llamr siempre lo respetara
   host: {
-    class: 'w-1/4 border-r border-b border-indigo-400'
+    class: 'border-r border-b border-indigo-400',
+    '[class.w-2/4]': 'isDoubleSize()',
+    '[class.w-1/4]': '!isDoubleSize()'
   },
   // Esta puede ser otra opcion
   // encapsulation: ViewEncapsulation.None
@@ -37,10 +39,12 @@ export class CalculatorButtonComponent {
   //   return this.isCommand();
   // }
 
-  //  Este decorador tiene el acceso y todas las propiedades del host en el decorador @Component
-  @HostBinding('class.w-2/4') get commandStyle() {
-    return this.isDoubleSize();
-  }
+  // Este decorador tiene el acceso y todas las propiedades del host en el decorador @Component
+  // ya no es recomendado usarlo con decoradores ahora es usarlo de forma directa en el Host del @Component
+  // @HostBinding('class.w-2/4') get commandStyle() {
+  //   return this.isDoubleSize();
+  // }
+
 
   handleClick(): void {
     if(!this.contentValue()?.nativeElement.innerText) return;
