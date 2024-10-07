@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, viewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, viewChildren } from '@angular/core';
 import { CalculatorButtonComponent } from '../calculator-button/calculator-button.component';
+import { CalculatorService } from '@/calculator/services/calculator.service';
 
 @Component({
   selector: 'calculator',
@@ -24,9 +25,21 @@ import { CalculatorButtonComponent } from '../calculator-button/calculator-butto
 })
 export class CalculatorComponent {
 
+  private calculatorService = inject(CalculatorService);
+
   // *El viewChildren es similar al viewchild la diferencia es
   // *que optiene todos los componentes de nuetro dom segun se las indiquiemos
-  public calculatorButtons = viewChildren( CalculatorButtonComponent )
+  public calculatorButtons = viewChildren( CalculatorButtonComponent );
+
+  // Computed es propio de Angular y es quien nos ayudara a leer los signals
+  public resultText = computed( () => this.calculatorService.resultText() );
+  public subResultText = computed( () => this.calculatorService.subResultText() );
+  public lastOperator = computed( () => this.calculatorService.lastOperator() );
+
+  //Obtener la data del signal de forma tradicional con un Get
+  // get resultText(){
+  //   return this.calculatorService.resultText();
+  // }
 
   handleClick( key: string): void {
     console.log({ key });
