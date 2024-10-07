@@ -50,7 +50,6 @@ export class CalculatorButtonComponent {
 
   public keyBoardPressedStyle( key: string ): void {
     if( !this.contentValue() ) return;
-
     const value = this.contentValue()!.nativeElement.innerText;
     if(key !== value) return;
     this.isPressed.set(true);

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChildren } from '@angular/core';
 import { CalculatorButtonComponent } from '../calculator-button/calculator-button.component';
 
 @Component({
@@ -23,6 +23,11 @@ import { CalculatorButtonComponent } from '../calculator-button/calculator-butto
   // `
 })
 export class CalculatorComponent {
+
+  // *El viewChildren es similar al viewchild la diferencia es
+  // *que optiene todos los componentes de nuetro dom segun se las indiquiemos
+  public calculatorButtons = viewChildren( CalculatorButtonComponent )
+
   handleClick( key: string): void {
     console.log({ key });
   }
@@ -37,7 +42,21 @@ export class CalculatorComponent {
   // }
 
   handlerKeyboardEvent( event: KeyboardEvent ): void {
+    const keyEquivalents: Record<string, string> = {
+      Escape: 'C',
+      Clear: 'C',
+      Enter: '=',
+      '*': 'x',
+      '/': '÷'
+    }
 
-    this.handleClick(event.key)
+    const key = event.key;
+    const keyValue = keyEquivalents[key] ?? key;
+
+    this.handleClick(keyValue);
+    this.calculatorButtons().forEach( button => {
+      button.keyBoardPressedStyle(keyValue);
+    });
+
   }
 }
