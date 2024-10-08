@@ -42,7 +42,7 @@ export class CalculatorComponent {
   // }
 
   handleClick( key: string): void {
-    console.log({ key });
+    this.calculatorService.constructNumber(key);
   }
 
   // *Esta es la manera tradicional de interactuar con los dispositivos fisicos del usuario

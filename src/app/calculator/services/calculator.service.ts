@@ -54,10 +54,52 @@ export class CalculatorService {
       return;
     }
 
+    //Limitar número de caracteres
+    if(this.resultText().length >= 10){
+      return;
+    }
+
     //Validar punto decimal
     if(value === '.' && !this.resultText().includes('.')){
-      if(this.resultText() === '0'){}
+      if(this.resultText() === '0' || this.resultText() === ''){
+        this.resultText.set('0.')
+        return;
+      }
+      this.resultText.update( text => text + '.' );
+      return;
     }
+
+    //Manejo del cero inicial
+    if(value === '0' && (this.resultText() === '0' || this.resultText() === '-0')) {
+      return;
+    }
+
+    //Cambiar signo
+    if(value === '+/-'){
+      if(this.resultText().includes('-')){
+        this.resultText.update(text => text.slice(1));
+        return;
+      }
+      this.resultText.update(text => '-' + text);
+      return;
+    }
+
+    //Numeros
+    if(numberValids.includes(value)) {
+      if (this.resultText() === '0'){
+        this.resultText.set(value);
+        return;
+      }
+      if(this.resultText() === '-0'){
+        this.resultText.set('-'+value);
+        return;
+      }
+      this.resultText.update((text) => text + value);
+      return;
+    }
+
+
+
   }
 
 }
