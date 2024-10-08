@@ -65,7 +65,6 @@ export class CalculatorComponent {
 
     const key = event.key;
     const keyValue = keyEquivalents[key] ?? key;
-
     this.handleClick(keyValue);
     this.calculatorButtons().forEach( button => {
       button.keyBoardPressedStyle(keyValue);
